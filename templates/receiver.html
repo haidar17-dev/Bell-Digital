@@ -7,30 +7,18 @@
 </head>
 <body>
 
-<h1>📡 RECEIVER</h1>
 <p>Menunggu bel...</p>
 <p><b>Klik sekali di halaman ini agar suara bisa diputar</b></p>
 
 <audio id="sound" src="/static/chicken.mp3"></audio>
 
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
 <script>
-  const socket = io();
-  const sound = document.getElementById("sound");
+  const pusher = new Pusher('bcf0f5714b9e9a5b86d1', { cluster: 'ap1' });
+  const channel = pusher.subscribe('bell-channel');
 
-  // unlock audio (wajib di browser)
-  document.body.addEventListener("click", () => {
-    sound.play().then(() => {
-      sound.pause();
-      sound.currentTime = 0;
-      console.log("Audio unlocked");
-    });
-  }, { once: true });
-
-  socket.on("bell", () => {
-    console.log("BEL DITERIMA");
-    sound.currentTime = 0;
-    sound.play();
+  channel.bind('bell-event', function(data) {
+    alert("BEL BERBUNYI: " + data.message);
   });
 </script>
 
