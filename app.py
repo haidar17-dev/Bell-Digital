@@ -1,15 +1,9 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
+from flask_socketio import SocketIO
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
-import pusher
+socketio = SocketIO(app)
 
-pusher_client = pusher.Pusher(
-    app_id = "2134043",
-    key = "bcf0f5714b9e9a5b86d1",
-    secret = "2aa54de5497b0a0857a6",
-    cluster = "ap1",
-    ssl=True
-)
 
 @app.route("/")
 def index():
@@ -27,6 +21,14 @@ def sender():
 def receiver():
     return render_template("receiver.html")
 
-# WAJIB SEPERTI INI:
+@socketio.on("connect")
+def handle_connect():
+    print("Client terhubung")
+
+@socketio.on("bell")
+def handle_bell():
+    print("BEL DITEKAN")
+    socketio.emit("bell")
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app, debug=True,host="0.0.0.0", port=5001)
