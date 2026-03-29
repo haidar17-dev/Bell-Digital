@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, jsonify
+from flask import Flask, render_template, redirect, url_for
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 import pusher
@@ -27,10 +27,6 @@ def sender():
 def receiver():
     return render_template("receiver.html")
 
-@app.route("/push-bell", methods=["POST"])
-def push_bell():
-    pusher_client.trigger('bell-channel', 'bell-event', {'message': 'BEL DITEKAN'})
-    return jsonify({"status": "success"})
-    
+# WAJIB SEPERTI INI:
 if __name__ == "__main__":
     app.run(debug=True)
