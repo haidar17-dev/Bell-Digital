@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Bell Sender</title>
+  <link rel="stylesheet" href="static/sender.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" href="static/images/bell.svg">
+</head>
+<body>
+  <div class="container">
+    <button id="bell" class="bell">
+      <i class="fa-solid fa-bell fa-shake" style="color: #ffffff;"></i> &nbsp; BEL
+    </button>
+  </div>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+  // connect ke server (pakai host & port yang sama)
+  const socket = io();
+
+  document.getElementById("bell").addEventListener("click", () => {
+    socket.emit("bell");
+    console.log("BEL DIKIRIM");
+  });
+</script>
+
+</body>
+</html>
