@@ -13,7 +13,7 @@
 
 <audio id="sound" src="/static/chicken.mp3"></audio>
 
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
 <script>
   const socket = io();
   const sound = document.getElementById("sound");
@@ -27,10 +27,11 @@
     });
   }, { once: true });
 
-  socket.on("bell", () => {
-    console.log("BEL DITERIMA");
-    sound.currentTime = 0;
-    sound.play();
+  const pusher = new Pusher('bcf0f5714b9e9a5b86d1', { cluster: 'ap1' });
+  const channel = pusher.subscribe('bell-channel');
+
+  channel.bind('bell-event', function(data) {
+    alert("BEL BERBUNYI: " + data.message);
   });
 </script>
 

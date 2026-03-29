@@ -13,15 +13,16 @@
       <i class="fa-solid fa-bell fa-shake" style="color: #ffffff;"></i> &nbsp; BEL
     </button>
   </div>
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
 <script>
   // connect ke server (pakai host & port yang sama)
   const socket = io();
 
-  document.getElementById("bell").addEventListener("click", () => {
-    socket.emit("bell");
-    console.log("BEL DIKIRIM");
-  });
+  fetch('/push-bell', { method: 'POST' })
+      .then(response => {
+        if (response.ok) console.log("BEL BERHASIL DIKIRIM");
+      })
+      .catch(err => console.error("Error:", err));
 </script>
 
 </body>
