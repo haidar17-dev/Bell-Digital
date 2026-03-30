@@ -10,7 +10,7 @@ pusher_client = pusher.Pusher(
     cluster = "ap1",
     ssl=True
 )
-
+#
 @app.route("/")
 def index():
     return redirect(url_for('app_run'))
